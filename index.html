@@ -1,46 +1,164 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="хонисаклер - дискография, синглы и ссылки">
+
     <title>хонисаклер</title>
-    <link rel="stylesheet" href="style.css?v=2">
+
+    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
 <main class="page">
+
     <header class="header">
         <h1>хонисаклер</h1>
     </header>
 
+
     <section class="discography">
+
         <div class="album-list">
             <h2>дискография</h2>
             <div id="album-list"></div>
         </div>
 
+
         <div class="album-info" id="album-info">
+
             <h2 id="album-title"></h2>
+
             <p id="album-meta"></p>
-            <img class="album-cover" id="album-cover" src="" alt="">
-            <div class="album-links" id="album-links"></div>
+
+            <img
+                id="album-cover"
+                class="album-cover"
+                src=""
+                alt=""
+            >
+
+            <div
+                class="album-links"
+                id="album-links"
+            ></div>
+
+            <a
+                id="album-download"
+                class="album-download"
+                href="#"
+                download
+            >
+                скачать альбом
+            </a>
+
         </div>
 
-        <div class="track-list" id="track-list"></div>
+
+        <div
+            class="track-list"
+            id="track-list"
+        ></div>
+
     </section>
+
 
     <section class="singles">
+
         <h2>синглы</h2>
+
         <div id="singles-list"></div>
+
     </section>
 
+
     <section class="bottom">
+
         <div class="links">
+
             <h2>ссылки</h2>
+
             <div id="social-links"></div>
+
         </div>
+
     </section>
+
 </main>
-<script src="script.js?v=2"></script>
+
+
+<div
+    class="player"
+    id="player"
+    hidden
+>
+
+    <div class="player-inner">
+
+        <button
+            class="player-button"
+            id="player-toggle"
+            type="button"
+            aria-label="play / pause"
+        >
+            ▶
+        </button>
+
+        <div class="player-info">
+
+            <div
+                class="player-title"
+                id="player-title"
+            ></div>
+
+            <div class="player-progress-row">
+
+                <span id="player-current">0:00</span>
+
+                <input
+                    id="player-progress"
+                    class="player-progress"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0"
+                    step="0.1"
+                    aria-label="позиция трека"
+                >
+
+                <span id="player-duration">0:00</span>
+
+            </div>
+
+        </div>
+
+        <a
+            id="track-download"
+            class="download-link"
+            href="#"
+            download
+            title="скачать трек"
+            aria-label="скачать трек"
+        >
+            <svg
+                class="download-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/>
+            </svg>
+        </a>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
 </body>
+
 </html>

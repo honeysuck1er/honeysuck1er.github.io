@@ -203,6 +203,12 @@ audio.preload = "metadata";
 
 let currentAlbum = null;
 let currentTrack = null;
+
+let currentSingleRelease = null;
+let currentSingleTrackIndex = -1;
+
+let singlesAudio = [];
+
 let isSeeking = false;
 
 
@@ -239,6 +245,21 @@ function updateTrackRows() {
             row.classList.add("active");
         }
     });
+
+    document.querySelectorAll(".single-track").forEach((row) => {
+        row.classList.remove("active");
+
+        if (!currentSingleRelease || currentSingleTrackIndex < 0) {
+            return;
+        }
+
+        const sameRelease = row.dataset.release === currentSingleRelease.slug;
+        const sameTrack = Number(row.dataset.trackIndex) === currentSingleTrackIndex;
+
+        if (sameRelease && sameTrack) {
+            row.classList.add("active");
+        }
+    });
 }
 
 
@@ -259,6 +280,9 @@ function playTrack(album, track) {
 
     currentAlbum = album;
     currentTrack = track;
+
+    currentSingleRelease = null;
+    currentSingleTrackIndex = -1;
 
     player.hidden = false;
 
@@ -284,7 +308,63 @@ function playTrack(album, track) {
 }
 
 
+function playSingleTrack(release, track, trackIndex) {
+    const sameTrack =
+        !currentAlbum &&
+        currentSingleRelease?.slug === release.slug &&
+        currentSingleTrackIndex === trackIndex;
+
+    if (sameTrack) {
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+        return;
+    }
+
+    currentAlbum = null;
+    currentTrack = track;
+    currentSingleRelease = release;
+    currentSingleTrackIndex = trackIndex;
+
+    player.hidden = false;
+    playerTitle.textContent = track.title;
+    playerCurrent.textContent = "0:00";
+    playerDuration.textContent = "0:00";
+    playerProgress.value = 0;
+
+    trackDownload.href = track.file;
+    trackDownload.download = `${track.title}.mp3`;
+
+    audio.src = track.file;
+    audio.load();
+
+    audio.play().catch(() => {
+        playerTitle.textContent = `${track.title} - файл не найден`;
+    });
+
+    updateTrackRows();
+}
+
+
 function playNextTrack() {
+    if (currentSingleRelease) {
+        const nextIndex = currentSingleTrackIndex + 1;
+        const nextTrack = currentSingleRelease.tracks[nextIndex];
+
+        if (nextTrack) {
+            playSingleTrack(currentSingleRelease, nextTrack, nextIndex);
+            return;
+        }
+
+        playerToggle.textContent = "▶";
+        playerProgress.value = 0;
+        playerCurrent.textContent = "0:00";
+        updateTrackRows();
+        return;
+    }
+
     if (!currentAlbum || !currentTrack) {
         return;
     }
@@ -303,7 +383,6 @@ function playNextTrack() {
     playerToggle.textContent = "▶";
     playerProgress.value = 0;
     playerCurrent.textContent = "0:00";
-
     updateTrackRows();
 }
 
@@ -432,6 +511,11 @@ function selectAlbum(slug, updateUrl = false) {
 }
 
 
+function getSingleAudio(single) {
+    return singlesAudio.find((release) => release.title === single.title);
+}
+
+
 function renderSingles() {
     singlesList.innerHTML = "";
 
@@ -442,23 +526,79 @@ function renderSingles() {
         const row = document.createElement("div");
         row.className = "single";
 
-        const title = single.url
-            ? document.createElement("a")
-            : document.createElement("span");
-
+        const title = document.createElement("button");
+        title.className = "single-title";
+        title.type = "button";
         title.textContent = single.title;
-
-        if (single.url) {
-            title.href = single.url;
-            title.target = "_blank";
-            title.rel = "noopener noreferrer";
-        }
 
         const year = document.createElement("span");
         year.textContent = single.release_year;
 
-        row.append(title, year);
+        const external = document.createElement("a");
+        external.className = "single-external";
+        external.href = single.url;
+        external.target = "_blank";
+        external.rel = "noopener noreferrer";
+        external.textContent = "↗";
+        external.title = "открыть релиз";
+
+        row.append(title, year, external);
         item.appendChild(row);
+
+        const release = getSingleAudio(single);
+
+        if (release && release.tracks.length === 1) {
+            title.addEventListener("click", () => {
+                playSingleTrack(
+                    release,
+                    release.tracks[0],
+                    0
+                );
+            });
+        } else if (release && release.tracks.length > 1) {
+            const trackContainer = document.createElement("div");
+            trackContainer.className = "single-tracks";
+            trackContainer.hidden = true;
+
+            release.tracks.forEach((track, trackIndex) => {
+                const trackRow = document.createElement("button");
+                trackRow.className = "single-track";
+                trackRow.type = "button";
+                trackRow.dataset.release = release.slug;
+                trackRow.dataset.trackIndex = trackIndex;
+                trackRow.textContent = track.title;
+
+                trackRow.addEventListener("click", () => {
+                    playSingleTrack(
+                        release,
+                        track,
+                        trackIndex
+                    );
+                });
+
+                trackContainer.appendChild(trackRow);
+            });
+
+            title.addEventListener("click", () => {
+                trackContainer.hidden =
+                    !trackContainer.hidden;
+
+                item.classList.toggle(
+                    "open",
+                    !trackContainer.hidden
+                );
+            });
+
+            item.appendChild(trackContainer);
+        } else {
+            title.addEventListener("click", () => {
+                window.open(
+                    single.url,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+            });
+        }
 
         if (single.materials.length) {
             const materials = document.createElement("div");
@@ -466,12 +606,10 @@ function renderSingles() {
 
             single.materials.forEach((material) => {
                 const link = document.createElement("a");
-
                 link.href = material.url;
                 link.target = "_blank";
                 link.rel = "noopener noreferrer";
                 link.textContent = material.title;
-
                 materials.appendChild(link);
             });
 
@@ -480,6 +618,26 @@ function renderSingles() {
 
         singlesList.appendChild(item);
     });
+
+    updateTrackRows();
+}
+
+
+async function loadSinglesAudio() {
+    try {
+        const response = await fetch("singles_audio.json", {cache: "no-store"});
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        singlesAudio = await response.json();
+    } catch (error) {
+        console.error("Не удалось загрузить singles_audio.json:", error);
+        singlesAudio = [];
+    }
+
+    renderSingles();
 }
 
 
@@ -616,5 +774,5 @@ selectAlbum(
     siteData.albums[0].slug
 );
 
-renderSingles();
+loadSinglesAudio();
 renderSocials();

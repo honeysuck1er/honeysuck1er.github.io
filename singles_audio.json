@@ -1,0 +1,162 @@
+[
+  {
+    "title": "циклы",
+    "slug": "cikly",
+    "tracks": [
+      {
+        "title": "циклы",
+        "file": "audio/singles/cikly/cikly.mp3"
+      }
+    ]
+  },
+  {
+    "title": "интересно",
+    "slug": "interesno",
+    "tracks": [
+      {
+        "title": "интересно",
+        "file": "audio/singles/interesno/interesno.mp3"
+      }
+    ]
+  },
+  {
+    "title": "fomo",
+    "slug": "fomo",
+    "tracks": [
+      {
+        "title": "fomo",
+        "file": "audio/singles/fomo/fomo.mp3"
+      }
+    ]
+  },
+  {
+    "title": "hangover (x__x)",
+    "slug": "hangover-x-x",
+    "tracks": [
+      {
+        "title": "hangover (x__x)",
+        "file": "audio/singles/hangover-x-x/hangover-x-x.mp3"
+      }
+    ]
+  },
+  {
+    "title": "2023 ^_^",
+    "slug": "2023",
+    "tracks": [
+      {
+        "title": "2023 ^_^",
+        "file": "audio/singles/2023/2023.mp3"
+      }
+    ]
+  },
+  {
+    "title": "расскажи ^_^",
+    "slug": "rasskazhi",
+    "tracks": [
+      {
+        "title": "расскажи ^_^",
+        "file": "audio/singles/rasskazhi/rasskazhi.mp3"
+      }
+    ]
+  },
+  {
+    "title": "баллада об оппчике",
+    "slug": "ballada-ob-oppchike",
+    "tracks": [
+      {
+        "title": "баллада об оппчике",
+        "file": "audio/singles/ballada-ob-oppchike/ballada-ob-oppchike.mp3"
+      },
+      {
+        "title": "19",
+        "file": "audio/singles/ballada-ob-oppchike/19.mp3"
+      },
+      {
+        "title": "фиолетовая фанта ^_^",
+        "file": "audio/singles/ballada-ob-oppchike/fioletovaya-fanta.mp3"
+      }
+    ]
+  },
+  {
+    "title": "mlg moment",
+    "slug": "mlg-moment",
+    "tracks": [
+      {
+        "title": "плавит",
+        "file": "audio/singles/mlg-moment/plavit.mp3"
+      },
+      {
+        "title": "nyan cat",
+        "file": "audio/singles/mlg-moment/nyan-cat.mp3"
+      }
+    ]
+  },
+  {
+    "title": "егор привет",
+    "slug": "egor-privet",
+    "tracks": [
+      {
+        "title": "егор привет",
+        "file": "audio/singles/egor-privet/egor-privet.mp3"
+      },
+      {
+        "title": "бит егор привет чет завайбил меня ЖОСКА",
+        "file": "audio/singles/egor-privet/bit-egor-privet-chet-zavaybil-menya-zhoska.mp3"
+      }
+    ]
+  },
+  {
+    "title": "не умею...",
+    "slug": "ne-umeyu",
+    "tracks": [
+      {
+        "title": "не умею...",
+        "file": "audio/singles/ne-umeyu/ne-umeyu.mp3"
+      }
+    ]
+  },
+  {
+    "title": "ты ты ты",
+    "slug": "ty-ty-ty",
+    "tracks": [
+      {
+        "title": "ты ты ты",
+        "file": "audio/singles/ty-ty-ty/ty-ty-ty.mp3"
+      }
+    ]
+  },
+  {
+    "title": "паранойя!",
+    "slug": "paranoyya",
+    "tracks": [
+      {
+        "title": "паранойя!",
+        "file": "audio/singles/paranoyya/paranoyya.mp3"
+      }
+    ]
+  },
+  {
+    "title": "качели",
+    "slug": "kacheli",
+    "tracks": [
+      {
+        "title": "качели",
+        "file": "audio/singles/kacheli/kacheli.mp3"
+      }
+    ]
+  },
+  {
+    "title": "3",
+    "slug": "3",
+    "tracks": [
+      {
+        "title": "из китая",
+        "file": "audio/singles/3/iz-kitaya.mp3"
+      },
+      {
+        "title": "gang!",
+        "file": "audio/singles/3/gang.mp3"
+      }
+    ]
+  }
+]

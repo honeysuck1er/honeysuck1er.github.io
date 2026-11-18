@@ -401,7 +401,7 @@ function renderAlbumList(selectedSlug) {
 
         link.addEventListener("click", (event) => {
             event.preventDefault();
-            selectAlbum(album.slug, true);
+            selectAlbum(album.slug);
         });
 
         albumList.appendChild(link);
@@ -493,21 +493,13 @@ function renderAlbum(album) {
 }
 
 
-function selectAlbum(slug, updateUrl = false) {
+function selectAlbum(slug) {
     const album =
         siteData.albums.find((item) => item.slug === slug) ||
         siteData.albums[0];
 
     renderAlbumList(album.slug);
     renderAlbum(album);
-
-    if (updateUrl) {
-        const url = new URL(window.location.href);
-
-        url.searchParams.set("album", album.slug);
-
-        history.replaceState(null, "", url);
-    }
 }
 
 
@@ -766,13 +758,7 @@ audio.addEventListener("error", () => {
 });
 
 
-const params =
-    new URLSearchParams(window.location.search);
-
-selectAlbum(
-    params.get("album") ||
-    siteData.albums[0].slug
-);
+selectAlbum(siteData.albums[0].slug);
 
 loadSinglesAudio();
 renderSocials();

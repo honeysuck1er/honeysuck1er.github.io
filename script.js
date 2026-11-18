@@ -300,8 +300,12 @@ function playTrack(album, track) {
     audio.src = audioPath;
     audio.load();
 
-    audio.play().catch(() => {
-        playerTitle.textContent = `${track.title} - файл не найден`;
+    audio.play().catch((error) => {
+        if (error.name === "AbortError") {
+            return;
+        }
+
+        console.error(error);
     });
 
     updateTrackRows();
@@ -340,8 +344,12 @@ function playSingleTrack(release, track, trackIndex) {
     audio.src = track.file;
     audio.load();
 
-    audio.play().catch(() => {
-        playerTitle.textContent = `${track.title} - файл не найден`;
+    audio.play().catch((error) => {
+        if (error.name === "AbortError") {
+            return;
+        }
+
+        console.error(error);
     });
 
     updateTrackRows();
